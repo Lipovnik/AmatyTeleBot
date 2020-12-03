@@ -2,7 +2,9 @@ package ru.lipovniik.tbot.botapi;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.lipovniik.tbot.cache.UserDataCache;
@@ -10,16 +12,23 @@ import ru.lipovniik.tbot.cache.UserDataCache;
 @Component
 @Slf4j
 public class TelegramFacade {
-    private BotStateContext botStateContext;
-    private UserDataCache userDataCache;
+    private final BotStateContext botStateContext;
+    private final UserDataCache userDataCache;
 
     public TelegramFacade(BotStateContext botStateContext, UserDataCache userDataCache) {
         this.botStateContext = botStateContext;
         this.userDataCache = userDataCache;
     }
 
-    public SendMessage handleUpdate(Update update){
+    public BotApiMethod<?> handleUpdate(Update update){
         SendMessage replyMessage = null;
+
+        if (update.hasCallbackQuery()){
+            CallbackQuery callbackQuery = update.getCallbackQuery();
+            log.info("New callbackQuery from User:{}, userId:{}, with data:{}", callbackQuery.getFrom().getUserName(),
+                    callbackQuery.getFrom().getId(), callbackQuery.getData());
+            return processCallbackQuery(callbackQuery);
+        }
 
         Message message = update.getMessage();
         if (message != null && message.hasText()) {
@@ -36,27 +45,24 @@ public class TelegramFacade {
         BotState botState;
         SendMessage replyMessage;
 
-        switch (msgText){
-            case "/start":
-                botState = BotState.MAIN_MENU;
-                break;
-            case "О нас!":
-                botState = BotState.ABOUT_US;
-                break;
-            case "Часто задаваемые вопросы":
-                botState = BotState.FAQ;
-                break;
-            case "EU":
-                botState = BotState.SWITCH_LANGUAGE;
-                break;
-            default:
-                botState = userDataCache.getUsersCurrentBotState(userId);
-        }
+        botState = switch (msgText) {
+            case "/start" -> BotState.MAIN_MENU;
+            case "О AmatyCay!" -> BotState.ABOUT_US;
+            case "Часто задаваемые вопросы" -> BotState.FAQ;
+            default -> BotState.IGNORE_MESSAGE;
+        };
+
+        if (botState.equals(BotState.IGNORE_MESSAGE))
+            return null;
 
         userDataCache.setUsersCurrentBotState(userId, botState);
 
         replyMessage = botStateContext.processInputMessage(botState, message);
 
         return replyMessage;
+    }
+
+    private BotApiMethod<?> processCallbackQuery(CallbackQuery callbackQuery){
+        return null;
     }
 }

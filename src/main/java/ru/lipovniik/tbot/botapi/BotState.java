@@ -8,5 +8,6 @@ public enum BotState {
     ABOUT_US,
     FAQ,
     SWITCH_LANGUAGE,
-    WAITING_IN_MAIN_MENU
+    WAITING_IN_MAIN_MENU,
+    IGNORE_MESSAGE
 }
