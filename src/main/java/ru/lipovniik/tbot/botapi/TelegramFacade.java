@@ -47,8 +47,8 @@ public class TelegramFacade {
 
         botState = switch (msgText) {
             case "/start" -> BotState.MAIN_MENU;
-            case "О AmatyCay!" -> BotState.ABOUT_US;
-            case "Часто задаваемые вопросы" -> BotState.FAQ;
+            case "Об AmatyCay!" -> BotState.ABOUT_US;
+            case "FAQ" -> BotState.FAQ;
             default -> BotState.IGNORE_MESSAGE;
         };
 

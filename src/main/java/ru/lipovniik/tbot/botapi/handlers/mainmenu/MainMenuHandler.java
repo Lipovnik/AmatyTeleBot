@@ -30,7 +30,7 @@ public class MainMenuHandler implements InputMessageHandler {
         int userId = inputMsg.getFrom().getId();
         long chatId = inputMsg.getChatId();
 
-        SendMessage replyToUser = messagesService.getMainMenuMessage(chatId, "Я Котобот\nБла-бла-бла\nСнизу меню!");
+        SendMessage replyToUser = messagesService.getMainMenuMessage(chatId, "reply.mainMenu");
         userDataCache.setUsersCurrentBotState(userId, BotState.WAITING_IN_MAIN_MENU);
 
         return replyToUser;

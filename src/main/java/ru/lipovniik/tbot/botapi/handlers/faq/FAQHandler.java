@@ -1,4 +1,4 @@
-package ru.lipovniik.tbot.botapi.handlers.FAQ;
+package ru.lipovniik.tbot.botapi.handlers.faq;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

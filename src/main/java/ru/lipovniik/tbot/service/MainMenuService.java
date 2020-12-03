@@ -11,6 +11,11 @@ import java.util.List;
 
 @Service
 public class MainMenuService {
+    private LocalMessageService localMessageService;
+
+    public MainMenuService(LocalMessageService localMessageService) {
+        this.localMessageService = localMessageService;
+    }
 
     public SendMessage getMainMenuMessage(final long chatId, final String textMessage) {
         final ReplyKeyboardMarkup replyKeyboardMarkup = getMainMenuKeyboard();
@@ -30,10 +35,13 @@ public class MainMenuService {
         KeyboardRow row1 = new KeyboardRow();
         KeyboardRow row2 = new KeyboardRow();
         KeyboardRow row3 = new KeyboardRow();
-        row1.add(new KeyboardButton("О AmatyCay!"));
-        row1.add(new KeyboardButton("EU"));
-        row2.add(new KeyboardButton("Часто задаваемые вопросы"));
-        row3.add(new KeyboardButton("Задать вопрос"));
+        row1.add(new KeyboardButton("Свободные котята"));
+        row1.add(new KeyboardButton("Об AmatyCay!"));
+        row2.add(new KeyboardButton("Коты"));
+        row2.add(new KeyboardButton("Кошки"));
+        row3.add(new KeyboardButton("Где нас найти"));
+        row3.add(new KeyboardButton("FAQ"));
+        row3.add(new KeyboardButton("Отзывы"));
         keyboard.add(row1);
         keyboard.add(row2);
         keyboard.add(row3);
@@ -47,7 +55,7 @@ public class MainMenuService {
         final SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(String.valueOf(chatId));
-        sendMessage.setText(textMessage);
+        sendMessage.setText(localMessageService.getMessage(textMessage));
         if (replyKeyboardMarkup != null) {
             sendMessage.setReplyMarkup(replyKeyboardMarkup);
         }
