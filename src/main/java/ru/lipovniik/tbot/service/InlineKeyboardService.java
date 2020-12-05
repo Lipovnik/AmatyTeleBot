@@ -5,34 +5,50 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Bogolei Roman
+ */
 @Service
 public class InlineKeyboardService {
+    /**
+     * All buttons in one column
+     * @param buttonsData map with buttons data, key - text and values - data
+     * @return {@code InlineKeyboardMarkup}
+     */
     public InlineKeyboardMarkup getInlineKeyboard(Map<String, String> buttonsData){
         return getInlineKeyboard(buttonsData, 1);
     }
 
+    /**
+     * @param buttonsData map with buttons data, key - text and values - data
+     * @param columns the number of columns from buttons
+     * @return {@code InlineKeyboardMarkup}
+     */
     public InlineKeyboardMarkup getInlineKeyboard(Map<String, String> buttonsData, int columns){
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
-        int countButtons = buttonsData.size();
-        int countAddedButtons = 0;
+        int rows = (buttonsData.size() + columns - 1) / columns;
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-        while (countAddedButtons != countButtons) {
+        Iterator<Map.Entry<String, String>> iterator = buttonsData.entrySet().iterator();
+        for (int i = 0; i < rows; i++) {
             List<InlineKeyboardButton> buttonsRow = new ArrayList<>();
             int countButtonInRow = 0;
-            for (Map.Entry<String, String> pair : buttonsData.entrySet()) {
+
+            while (iterator.hasNext()){
+                Map.Entry<String, String> buttonData = iterator.next();
                 InlineKeyboardButton button = new InlineKeyboardButton();
-                button.setText(pair.getKey());
-                button.setCallbackData(pair.getValue());
+                button.setText(buttonData.getKey());
+                button.setCallbackData(buttonData.getValue());
                 buttonsRow.add(button);
-                countAddedButtons++;
                 countButtonInRow++;
                 if (countButtonInRow == columns)
                     break;
             }
+
             rowList.add(buttonsRow);
         }
 
