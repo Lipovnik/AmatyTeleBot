@@ -11,5 +11,7 @@ public enum BotState {
     BACK_FAQ,
     SWITCH_LANGUAGE,
     WAITING_IN_MAIN_MENU,
-    IGNORE_MESSAGE
+    IGNORE_MESSAGE,
+    ADULT_CATS,
+    LINKS
 }

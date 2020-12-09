@@ -16,19 +16,28 @@ import java.util.Map;
 public class InlineKeyboardService {
     /**
      * All buttons in one column
+     *
      * @param buttonsData map with buttons data, key - text and values - data
      * @return {@code InlineKeyboardMarkup}
      */
-    public InlineKeyboardMarkup getInlineKeyboard(Map<String, String> buttonsData){
-        return getInlineKeyboard(buttonsData, 1);
+    public InlineKeyboardMarkup getInlineKeyboard(Map<String, String> buttonsData) {
+        return createInlineKeyboard(buttonsData, 1);
     }
 
     /**
      * @param buttonsData map with buttons data, key - text and values - data
-     * @param columns the number of columns from buttons
+     * @param columns     the number of columns from buttons
      * @return {@code InlineKeyboardMarkup}
      */
-    public InlineKeyboardMarkup getInlineKeyboard(Map<String, String> buttonsData, int columns){
+    public InlineKeyboardMarkup getInlineKeyboard(Map<String, String> buttonsData, int columns) {
+        return createInlineKeyboard(buttonsData, columns);
+    }
+
+    public InlineKeyboardMarkup getLinksInlineKeyboard(Map<String, String> buttonsData, int columns) {
+        return createLinksInlineKeyboard(buttonsData, columns);
+    }
+
+    private InlineKeyboardMarkup createInlineKeyboard(Map<String, String> buttonsData, int columns) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         int rows = (buttonsData.size() + columns - 1) / columns;
@@ -38,11 +47,40 @@ public class InlineKeyboardService {
             List<InlineKeyboardButton> buttonsRow = new ArrayList<>();
             int countButtonInRow = 0;
 
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 Map.Entry<String, String> buttonData = iterator.next();
                 InlineKeyboardButton button = new InlineKeyboardButton();
                 button.setText(buttonData.getKey());
                 button.setCallbackData(buttonData.getValue());
+                buttonsRow.add(button);
+                countButtonInRow++;
+                if (countButtonInRow == columns)
+                    break;
+            }
+
+            rowList.add(buttonsRow);
+        }
+
+        inlineKeyboardMarkup.setKeyboard(rowList);
+
+        return inlineKeyboardMarkup;
+    }
+
+    private InlineKeyboardMarkup createLinksInlineKeyboard(Map<String, String> buttonsData, int columns) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+
+        int rows = (buttonsData.size() + columns - 1) / columns;
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+        Iterator<Map.Entry<String, String>> iterator = buttonsData.entrySet().iterator();
+        for (int i = 0; i < rows; i++) {
+            List<InlineKeyboardButton> buttonsRow = new ArrayList<>();
+            int countButtonInRow = 0;
+
+            while (iterator.hasNext()) {
+                Map.Entry<String, String> buttonData = iterator.next();
+                InlineKeyboardButton button = new InlineKeyboardButton();
+                button.setText(buttonData.getKey());
+                button.setUrl(buttonData.getValue());
                 buttonsRow.add(button);
                 countButtonInRow++;
                 if (countButtonInRow == columns)
