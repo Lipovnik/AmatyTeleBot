@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class MainMenuService {
-    private LocalMessageService localMessageService;
+    private final LocalMessageService localMessageService;
 
     public MainMenuService(LocalMessageService localMessageService) {
         this.localMessageService = localMessageService;
@@ -33,15 +33,19 @@ public class MainMenuService {
         List<KeyboardRow> keyboard = new ArrayList<>();
 
         KeyboardRow row1 = new KeyboardRow();
-        KeyboardRow row2 = new KeyboardRow();
-        KeyboardRow row3 = new KeyboardRow();
         row1.add(new KeyboardButton("Свободные котята"));
         row1.add(new KeyboardButton("Об AmatyCay!"));
+
+        KeyboardRow row2 = new KeyboardRow();
         row2.add(new KeyboardButton("Коты"));
+        row2.add(new KeyboardButton("FAQ"));
         row2.add(new KeyboardButton("Кошки"));
+
+        KeyboardRow row3 = new KeyboardRow();
         row3.add(new KeyboardButton("Где нас найти"));
-        row3.add(new KeyboardButton("FAQ"));
         row3.add(new KeyboardButton("Отзывы"));
+        row3.add(new KeyboardButton("Задать вопрос!\uD83D\uDE40"));
+
         keyboard.add(row1);
         keyboard.add(row2);
         keyboard.add(row3);

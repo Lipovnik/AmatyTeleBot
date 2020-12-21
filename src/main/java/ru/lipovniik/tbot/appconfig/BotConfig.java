@@ -3,14 +3,21 @@ package ru.lipovniik.tbot.appconfig;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.impl.conn.DefaultManagedHttpClientConnection;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
+import org.telegram.telegrambots.meta.generics.BotOptions;
 import ru.lipovniik.tbot.AmatyTeleBot;
 import ru.lipovniik.tbot.botapi.TelegramFacade;
+import org.telegram.telegrambots.meta.*;
 
 @Setter
 @Getter
@@ -21,9 +28,6 @@ public class BotConfig {
     private String botUserName;
     private String botToken;
 
-    private DefaultBotOptions.ProxyType proxyType;
-    private String proxyHost;
-    private int proxyPort;
 
     @Bean
     public AmatyTeleBot amatyTeleBot(TelegramFacade telegramFacade){

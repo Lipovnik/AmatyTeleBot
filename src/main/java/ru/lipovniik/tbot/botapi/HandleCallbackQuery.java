@@ -8,7 +8,7 @@ import ru.lipovniik.tbot.cache.UserDataCache;
 
 @Component
 public class HandleCallbackQuery {
-    private BotStateContext stateContext;
+    private final BotStateContext stateContext;
     private UserDataCache dataCache;
 
     private HandleCallbackQuery(BotStateContext stateContext, UserDataCache dataCache) {
@@ -26,24 +26,18 @@ public class HandleCallbackQuery {
                 Message message = buttonQuery.getMessage();
                 message.setText("reply.faq1");
                 callBackAnswer = stateContext.processInputMessage(BotState.FAQ_CATEGORY, message);
-                break;
             }
             case "data2" -> {
                 Message message = buttonQuery.getMessage();
                 message.setText("reply.faq2");
                 callBackAnswer = stateContext.processInputMessage(BotState.FAQ_CATEGORY, message);
-                break;
             }
             case "data3" -> {
                 Message message = buttonQuery.getMessage();
                 message.setText("reply.faq3");
                 callBackAnswer = stateContext.processInputMessage(BotState.FAQ_CATEGORY, message);
-                break;
             }
-            case "faq" -> {
-                callBackAnswer = stateContext.processInputMessage(BotState.BACK_FAQ, buttonQuery.getMessage());
-                break;
-            }
+            case "faq" -> callBackAnswer = stateContext.processInputMessage(BotState.BACK_FAQ, buttonQuery.getMessage());
         }
 
         return callBackAnswer;

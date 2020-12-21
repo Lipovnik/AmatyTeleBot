@@ -1,13 +1,11 @@
 package ru.lipovniik.tbot.botapi;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.lipovniik.tbot.AmatyTeleBot;
 import ru.lipovniik.tbot.cache.UserDataCache;
 
 @Component
@@ -36,8 +34,12 @@ public class TelegramFacade {
 
         Message message = update.getMessage();
 
-        if (message != null && message.hasPhoto()){
-            System.out.println(message);
+        if (message != null && message.hasPhoto()) {
+            System.out.println(message.getPhoto());
+            return null;
+        }
+        if (message != null && message.hasDocument()) {
+            System.out.println(message.getDocument());
             return null;
         }
 
@@ -52,15 +54,28 @@ public class TelegramFacade {
     private BotApiMethod<?> handleInputMessage(Message message) {
         String msgText = message.getText();
         int userId = message.getFrom().getId();
+        long chatId = message.getChatId();
         BotApiMethod<?> replyMessage;
+        BotState botState;
 
-        BotState botState = switch (msgText) {
-            case "/start" -> BotState.MAIN_MENU;
-            case "Об AmatyCay!" -> BotState.ABOUT_US;
-            case "FAQ" -> BotState.FAQ;
-            case "Где нас найти" -> BotState.LINKS;
-            default -> BotState.IGNORE_MESSAGE;
-        };
+        if (message.getReplyToMessage() != null && chatId == -465515338){
+            botState = BotState.SENDING_ANSWER;
+            replyMessage = botStateContext.processInputMessage(botState, message);
+            return replyMessage;
+        }else if (userDataCache.getUsersCurrentBotState(userId).equals(BotState.WAITING_FOR_QUESTION)) {
+            botState = BotState.SENDING_QUESTION;
+        } else {
+            botState = switch (msgText) {
+                case "/start" -> BotState.MAIN_MENU;
+                case "Об AmatyCay!" -> BotState.ABOUT_US;
+                case "FAQ" -> BotState.FAQ;
+                case "Где нас найти" -> BotState.LINKS;
+                case "Задать вопрос!\uD83D\uDE40" -> BotState.QUESTION;
+                case "Коты" -> BotState.ADULT_MALE_CATS;
+                case "Кошки" -> BotState.ADULT_FEMALE_CATS;
+                default -> BotState.IGNORE_MESSAGE;
+            };
+        }
         /*botState = switch (msgText) {
             case "/start" -> BotState.MAIN_MENU;
             case "Об AmatyCay!" -> BotState.ABOUT_US;
@@ -79,15 +94,4 @@ public class TelegramFacade {
         return replyMessage;
     }
 
-    /*private BotApiMethod<?> p(CallbackQuery callbackQuery){
-        Message inputMsg = callbackQuery.getMessage();
-        long chatId = inputMsg.getChatId();
-        int userId = inputMsg.getFrom().getId();
-        int messageId = inputMsg.getMessageId();
-        EditMessageText emt = new EditMessageText();
-        emt.setMessageId(messageId);
-        emt.setChatId(String.valueOf(chatId));
-        emt.setText("хахаах");
-        return emt;
-    }*/
 }
