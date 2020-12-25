@@ -67,6 +67,7 @@ public class TelegramFacade {
         } else {
             botState = switch (msgText) {
                 case "/start" -> BotState.MAIN_MENU;
+                case "/update" -> BotState.UPDATE_CATS;
                 case "Об AmatyCay!" -> BotState.ABOUT_US;
                 case "FAQ" -> BotState.FAQ;
                 case "Где нас найти" -> BotState.LINKS;

@@ -5,17 +5,23 @@ import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.lipovniik.tbot.botapi.BotState;
 import ru.lipovniik.tbot.botapi.InputMessageHandler;
+import ru.lipovniik.tbot.botapi.parsers.amatycay.AmatyCayParser;
+import ru.lipovniik.tbot.cache.CatsDataCache;
 import ru.lipovniik.tbot.cache.UserDataCache;
 import ru.lipovniik.tbot.service.SendMediaService;
+
+import java.util.Map;
 
 @Component
 class AdultMaleCatsHandler implements InputMessageHandler {
     private final SendMediaService mediaService;
     private final UserDataCache userDataCache;
+    private final CatsDataCache catsDataCache;
 
-    AdultMaleCatsHandler(SendMediaService mediaService, UserDataCache userDataCache) {
+    AdultMaleCatsHandler(SendMediaService mediaService, UserDataCache userDataCache, AmatyCayParser amatyCayParser, CatsDataCache catsDataCache) {
         this.mediaService = mediaService;
         this.userDataCache = userDataCache;
+        this.catsDataCache = catsDataCache;
     }
 
     @Override
@@ -27,10 +33,16 @@ class AdultMaleCatsHandler implements InputMessageHandler {
 
     private void sendPhoto(Message inputMsg) {
         long chatId = inputMsg.getChatId();
+        Map<String, String> map = catsDataCache.getMaleCatsPhoto();
+        for (Map.Entry<String, String> pair: map.entrySet()){
+            mediaService.sendPhoto(chatId, pair.getValue(), pair.getKey());
+        }
+        /*
         mediaService.sendPhoto(chatId, "AgACAgQAAxkDAAIFfF_gvom3Vq45fuRhNAom36a241q7AAKGqzEbe-cMU9rrCrCLsRCQV4b5KF0AAwEAAwIAA3cAA93vAQABHgQ", "Konsul");
         mediaService.sendPhoto(chatId, "AgACAgQAAxkDAAIFfV_gv4pO2Gabc5D_-N-I7llEWKZlAAKCqzEbzCQMU3PU9_rlZ0saCL_VJl0AAwEAAwIAA3gAA5e-AwABHgQ", "Diesel");
         mediaService.sendPhoto(chatId, "AgACAgQAAxkDAAIFfl_gwGHJD87UOD1KZ-n25G-8dOrtAAK7qzEbfFoFUxcdTqUVKYcSQmrgJl0AAwEAAwIAA3kAA8yJAwABHgQ", "Tom Crise");
         mediaService.sendPhoto(chatId, "AgACAgQAAxkDAAIFXV_gr4kON9HJ3VSvCP2jiOVz7eFcAAJ8qzEbMf8NU5zph5gLuugcOC5IJ10AAwEAAwIAA3cAAyyDAwABHgQ", "Ostin");
+         */
     }
 
     @Override

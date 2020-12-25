@@ -29,7 +29,7 @@ public class QuestionHandler implements InputMessageHandler {
         long chatId = inputMsg.getChatId();
         int userId = inputMsg.getFrom().getId();
 
-        SendMessage replyToUser = messagesService.getReplyMessage(chatId, "reply.question");
+        SendMessage replyToUser = messagesService.getReplyMessage(chatId, "reply.question1");
         userDataCache.setUsersCurrentBotState(userId, BotState.WAITING_FOR_QUESTION);
 
         return replyToUser;
