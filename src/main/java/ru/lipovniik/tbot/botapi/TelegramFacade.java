@@ -72,6 +72,7 @@ public class TelegramFacade {
                 case "FAQ" -> BotState.FAQ;
                 case "Где нас найти" -> BotState.LINKS;
                 case "Задать вопрос!\uD83D\uDE40" -> BotState.QUESTION;
+                case "Отзывы" -> BotState.REVIEWS;
                 case "Коты" -> BotState.ADULT_MALE_CATS;
                 case "Кошки" -> BotState.ADULT_FEMALE_CATS;
                 default -> BotState.IGNORE_MESSAGE;

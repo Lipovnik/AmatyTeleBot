@@ -15,6 +15,7 @@ public enum BotState {
     ADULT_MALE_CATS,
     ADULT_FEMALE_CATS,
     LINKS,
+    REVIEWS,
     QUESTION,
     WAITING_FOR_QUESTION,
     SENDING_QUESTION,
