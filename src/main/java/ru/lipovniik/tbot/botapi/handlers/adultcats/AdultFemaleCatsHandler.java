@@ -36,10 +36,6 @@ public class AdultFemaleCatsHandler implements InputMessageHandler {
         for (Map.Entry<String, String> pair: map.entrySet()){
             mediaService.sendPhoto(chatId, pair.getValue(), pair.getKey());
         }
-        /*mediaService.sendPhoto(chatId, "AgACAgQAAxkDAAIFf1_gwpH0-CUNoXNpOvWCS5xg469sAAK6qzEbuCgNU1KzrM6Fhzf4qjC9Kl0AAwEAAwIAA3cAA5k1AAIeBA", "Ginger");
-        mediaService.sendPhoto(chatId, "AgACAgQAAxkDAAIFgF_gwutNPkYB9tBv6CCaCLNlmey9AAKhqzEbE5wNU7w49OmaXjW8VpX8KF0AAwEAAwIAA3cAA63uAQABHgQ", "Tyra");
-        mediaService.sendPhoto(chatId, "AgACAgQAAxkDAAIFgV_gwzQ4kj6wcEiTe4kmsm3ifoylAAKRqzEbwOINU7NnMKEu3HiT4DdTKF0AAwEAAwIAA3cAA1LMAQABHgQ", "Safia");
-        mediaService.sendPhoto(chatId, "AgACAgQAAxkDAAIFgl_gw3Kb8hdJH8Mv59Dcfc-tRtvkAALkqzEboIwEUwUBUMvGpR2pHmHAJl0AAwEAAwIAA3cAA4W_AwABHgQ", "Laysan");*/
     }
 
     @Override

@@ -18,9 +18,9 @@ import java.util.Map;
 @Slf4j
 @Component
 public class BackFAQHandler implements InputMessageHandler {
-    private UserDataCache userDataCache;
-    private InlineKeyboardService inlineKeyboardService;
-    private EditMessagesService messagesService;
+    private final UserDataCache userDataCache;
+    private final InlineKeyboardService inlineKeyboardService;
+    private final EditMessagesService messagesService;
 
     public BackFAQHandler(UserDataCache userDataCache, EditMessagesService messagesService, InlineKeyboardService inlineKeyboardService) {
         this.userDataCache = userDataCache;
