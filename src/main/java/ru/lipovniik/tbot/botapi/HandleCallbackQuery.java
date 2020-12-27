@@ -20,24 +20,28 @@ public class HandleCallbackQuery {
         String buttonData = buttonQuery.getData();
         BotApiMethod<?> callBackAnswer = null;
 
-        //From FAQ choose button
+
         switch (buttonData) {
-            case "data1" -> {
+            //From FAQ choose button
+            case "faq1" -> {
                 Message message = buttonQuery.getMessage();
                 message.setText("reply.faq1");
                 callBackAnswer = stateContext.processInputMessage(BotState.FAQ_CATEGORY, message);
             }
-            case "data2" -> {
+            case "faq2" -> {
                 Message message = buttonQuery.getMessage();
                 message.setText("reply.faq2");
                 callBackAnswer = stateContext.processInputMessage(BotState.FAQ_CATEGORY, message);
             }
-            case "data3" -> {
+            case "faq3" -> {
                 Message message = buttonQuery.getMessage();
                 message.setText("reply.faq3");
                 callBackAnswer = stateContext.processInputMessage(BotState.FAQ_CATEGORY, message);
             }
             case "faq" -> callBackAnswer = stateContext.processInputMessage(BotState.BACK_FAQ, buttonQuery.getMessage());
+            //Cancel Question
+            case "cancelQuestion" ->  callBackAnswer = stateContext.processInputMessage(BotState.FAQ_CATEGORY, buttonQuery.getMessage());
+
         }
 
         return callBackAnswer;
