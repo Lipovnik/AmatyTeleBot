@@ -40,7 +40,7 @@ public class HandleCallbackQuery {
             }
             case "faq" -> callBackAnswer = stateContext.processInputMessage(BotState.BACK_FAQ, buttonQuery.getMessage());
             //Cancel Question
-            case "cancelQuestion" ->  callBackAnswer = stateContext.processInputMessage(BotState.FAQ_CATEGORY, buttonQuery.getMessage());
+            case "cancelQuestion" ->  callBackAnswer = stateContext.processInputMessage(BotState.CANCEL_QUESTION, buttonQuery.getMessage());
 
         }
 

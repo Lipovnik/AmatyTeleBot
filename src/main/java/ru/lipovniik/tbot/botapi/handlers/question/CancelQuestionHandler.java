@@ -28,7 +28,7 @@ public class CancelQuestionHandler implements InputMessageHandler {
         int userId = inputMsg.getFrom().getId();
 
         SendMessage replyToUser = messagesService.getReplyMessage(chatId, "reply.cancelQuestion");
-        userDataCache.setUsersCurrentBotState(userId, BotState.WAITING_IN_MAIN_MENU);
+        userDataCache.setUsersCurrentBotState((int) chatId, BotState.WAITING_IN_MAIN_MENU);
 
         return replyToUser;
     }

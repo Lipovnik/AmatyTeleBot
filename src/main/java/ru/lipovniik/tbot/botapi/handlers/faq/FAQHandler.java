@@ -52,9 +52,9 @@ public class FAQHandler implements InputMessageHandler {
     private Map<String, String> getKeyboardData(){
         Map<String, String> keyboardData = new LinkedHashMap<>();
 
-        keyboardData.put("Категория 1", "data1");
-        keyboardData.put("Категория 2", "data2");
-        keyboardData.put("Категория 3", "data3");
+        keyboardData.put("Категория 1", "faq1");
+        keyboardData.put("Категория 2", "faq2");
+        keyboardData.put("Категория 3", "faq3");
 
         return keyboardData;
     }

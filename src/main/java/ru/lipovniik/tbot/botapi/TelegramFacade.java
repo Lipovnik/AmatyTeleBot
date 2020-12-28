@@ -52,17 +52,26 @@ public class TelegramFacade {
     }
 
     private BotApiMethod<?> handleInputMessage(Message message) {
-        String msgText = message.getText();
-        int userId = message.getFrom().getId();
+        final long adminChatId = -465515338;
+
         long chatId = message.getChatId();
         BotApiMethod<?> replyMessage;
-        BotState botState;
 
-        if (message.getReplyToMessage() != null && chatId == -465515338){
-            botState = BotState.SENDING_ANSWER;
-            replyMessage = botStateContext.processInputMessage(botState, message);
-            return replyMessage;
-        }else if (userDataCache.getUsersCurrentBotState(userId).equals(BotState.WAITING_FOR_QUESTION)) {
+        if (chatId == adminChatId)
+            replyMessage = getAdminReplyMessage(message);
+        else
+            replyMessage = getReplyMessage(message);
+
+        return replyMessage;
+    }
+
+    private BotApiMethod<?> getReplyMessage(Message message) {
+        BotState botState;
+        BotApiMethod<?> replyMessage;
+        String msgText = message.getText();
+        int userId = message.getFrom().getId();
+
+        if (userDataCache.getUsersCurrentBotState(userId).equals(BotState.WAITING_FOR_QUESTION)) {
             botState = BotState.SENDING_QUESTION;
         } else {
             botState = switch (msgText) {
@@ -78,21 +87,20 @@ public class TelegramFacade {
                 default -> BotState.IGNORE_MESSAGE;
             };
         }
-        /*botState = switch (msgText) {
-            case "/start" -> BotState.MAIN_MENU;
-            case "Об AmatyCay!" -> BotState.ABOUT_US;
-            case "FAQ" -> BotState.FAQ;
-            case "Коты" -> BotState.IGNORE_MESSAGE;
-            default -> BotState.IGNORE_MESSAGE;
-        };*/
 
         if (botState.equals(BotState.IGNORE_MESSAGE))
             return null;
 
         userDataCache.setUsersCurrentBotState(userId, botState);
-
         replyMessage = botStateContext.processInputMessage(botState, message);
 
+        return replyMessage;
+    }
+
+    private BotApiMethod<?> getAdminReplyMessage(Message message) {
+        BotApiMethod<?> replyMessage = null;
+        if (message.getReplyToMessage() != null)
+            replyMessage = botStateContext.processInputMessage(BotState.SENDING_ANSWER, message);
         return replyMessage;
     }
 
