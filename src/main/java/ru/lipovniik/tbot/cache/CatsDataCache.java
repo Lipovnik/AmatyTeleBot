@@ -3,7 +3,6 @@ package ru.lipovniik.tbot.cache;
 import org.springframework.stereotype.Component;
 import ru.lipovniik.tbot.botapi.parsers.amatycay.AmatyCayParser;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
@@ -17,8 +16,8 @@ public class CatsDataCache {
     }
 
     public void updateCatsMaps(){
-        maleCatsPhoto = parser.getParserData("koty");
-        femaleCatsPhoto = parser.getParserData("koshki");
+        maleCatsPhoto = parser.getParserAdultData("koty");
+        femaleCatsPhoto = parser.getParserAdultData("koshki");
     }
 
     public Map<String, String> getMaleCatsPhoto() {
