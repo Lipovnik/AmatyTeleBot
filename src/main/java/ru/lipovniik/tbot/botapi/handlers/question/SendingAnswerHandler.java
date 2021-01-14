@@ -23,8 +23,8 @@ public class SendingAnswerHandler implements InputMessageHandler {
     private SendMessage processUsersInput(Message inputMsg){
         SendMessage replyToUser = new SendMessage();
         String infoText = inputMsg.getReplyToMessage().getText();
-        String chatIdStr = infoText.substring(0, infoText.indexOf(' '));
         try {
+            String chatIdStr = infoText.substring(0, infoText.indexOf(' '));
             long chatId = Long.parseLong(chatIdStr);
             String text = inputMsg.getText();
             replyToUser.setChatId(String.valueOf(chatId));

@@ -34,17 +34,17 @@ public class MainMenuService {
 
         KeyboardRow row1 = new KeyboardRow();
         row1.add(new KeyboardButton("Свободные котята"));
-        row1.add(new KeyboardButton("Об AmatyCay!"));
+        row1.add(new KeyboardButton("О питомнике"));
 
         KeyboardRow row2 = new KeyboardRow();
         row2.add(new KeyboardButton("Коты"));
-        row2.add(new KeyboardButton("FAQ"));
+        row2.add(new KeyboardButton("Вопросы"));
         row2.add(new KeyboardButton("Кошки"));
 
         KeyboardRow row3 = new KeyboardRow();
         row3.add(new KeyboardButton("Где нас найти"));
         row3.add(new KeyboardButton("Отзывы"));
-        row3.add(new KeyboardButton("Задать вопрос!\uD83D\uDE40"));
+        row3.add(new KeyboardButton("Задать вопрос"));
 
         keyboard.add(row1);
         keyboard.add(row2);

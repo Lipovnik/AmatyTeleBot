@@ -77,13 +77,14 @@ public class TelegramFacade {
             botState = switch (msgText) {
                 case "/start" -> BotState.MAIN_MENU;
                 case "/update" -> BotState.UPDATE_CATS;
-                case "Об AmatyCay!" -> BotState.ABOUT_US;
-                case "FAQ" -> BotState.FAQ;
+                case "О питомнике" -> BotState.ABOUT_US;
+                case "Вопросы" -> BotState.FAQ;
                 case "Где нас найти" -> BotState.LINKS;
-                case "Задать вопрос!\uD83D\uDE40" -> BotState.QUESTION;
+                case "Задать вопрос" -> BotState.QUESTION;
                 case "Отзывы" -> BotState.REVIEWS;
                 case "Коты" -> BotState.ADULT_MALE_CATS;
                 case "Кошки" -> BotState.ADULT_FEMALE_CATS;
+                case "Свободные котята" -> BotState.MENU_FREE_KITTENS;
                 default -> BotState.IGNORE_MESSAGE;
             };
         }
@@ -99,8 +100,20 @@ public class TelegramFacade {
 
     private BotApiMethod<?> getAdminReplyMessage(Message message) {
         BotApiMethod<?> replyMessage = null;
+        String msgText = message.getText();
+        System.out.println(message);
+        BotState botState = switch (msgText) {
+            case "/update" -> BotState.UPDATE_CATS;
+            default -> BotState.IGNORE_MESSAGE;
+        };
         if (message.getReplyToMessage() != null)
             replyMessage = botStateContext.processInputMessage(BotState.SENDING_ANSWER, message);
+
+        if (botState.equals(BotState.IGNORE_MESSAGE))
+            return null;
+
+        replyMessage = botStateContext.processInputMessage(botState, message);
+
         return replyMessage;
     }
 

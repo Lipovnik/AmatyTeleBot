@@ -3,13 +3,11 @@ package ru.lipovniik.tbot.botapi.parsers.amatycay;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 @Component
 public class AmatyCayParser {
@@ -45,10 +43,25 @@ public class AmatyCayParser {
         return catsMap;
     }
 
-    private Map<String, Map<String, String>> getCatsKidData(){
+    private Map<String, Map<String, String>> getCatsKidData() {
         Map<String, Map<String, String>> catsMap = new LinkedHashMap<>();
         Document site = getSiteData("https://amatycay154.ru/svobodnye-kotyata/");
-        return null;
+
+        if (site != null) {
+            ArrayList<String[]> dataKittens = getDataKitten(site.select("div.row"));
+            String lastDofB = dataKittens.get(0)[0];
+            Map<String, String> siblings = new HashMap<>();
+            for (String[] kit: dataKittens){
+                if (!lastDofB.equals(kit[0])){
+                    catsMap.put(lastDofB, siblings);
+                    lastDofB = kit[0];
+                    siblings = new HashMap<>();
+                }
+                siblings.put(kit[1], kit[2]);
+            }
+        }
+
+        return catsMap;
     }
 
     private Document getSiteData(String url) {
@@ -67,19 +80,45 @@ public class AmatyCayParser {
 
     private boolean sterilized(Element data) {
         String urlCatPage = data.select("a.btn").attr("href");
-        Document page;
-        try {
-            page = Jsoup.connect(index + urlCatPage)
-                    .userAgent("Chrome/4.0.249.0")
-                    .referrer("https://yandex.ru/")
-                    .get();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        String sterilized = page.select("div.pet-adopt-info")
-                .select("b").get(1).text().toLowerCase(Locale.ROOT);
+        String url = index + urlCatPage;
+        Document page = getSiteData(url);
+        String sterilized = "нет";
+
+        if (page != null)
+            sterilized = page.select("div.pet-adopt-info")
+                    .select("b").get(1).text().toLowerCase(Locale.ROOT);
 
         return sterilized.equals("да");
+    }
+
+    private ArrayList<String[]> getDataKitten(Elements elements) {
+        ArrayList<String[]> dataKittens = new ArrayList<>();
+        for (Element catData : elements) {
+            String[] kit = new String[3];
+            kit[0] = getDOfB(catData);
+            kit[1] = index + catData.select("img[src$=.jpg]")
+                    .attr("src");
+
+            kit[2] = catData.select("div.res-margin")
+                    .select("a")
+                    .first().text();
+            System.out.println(Arrays.toString(kit));
+            dataKittens.add(kit);
+        }
+        return dataKittens;
+    }
+
+    private String getDOfB(Element data){
+        String urlCatPage = data.select("a.btn").attr("href");
+        String url = index + urlCatPage;
+        Document page = getSiteData(url);
+        String dateOfBirth = "01.01.2020";
+
+        if (page != null) {
+            dateOfBirth = page.select("div.col-md-7").select("ul").last()
+                    .select("li").first()
+                    .text().substring(15);
+        }
+        return dateOfBirth;
     }
 }

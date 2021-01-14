@@ -9,13 +9,15 @@ import java.util.Map;
 public class CatsDataCache {
     private Map<String, String> maleCatsPhoto;
     private Map<String, String> femaleCatsPhoto;
-    private AmatyCayParser parser;
+    private Map<String, Map<String, String>> kittens;
+    private final AmatyCayParser parser;
 
     public CatsDataCache(AmatyCayParser parser) {
         this.parser = parser;
     }
 
     public void updateCatsMaps(){
+        kittens = parser.getParserKidData();
         maleCatsPhoto = parser.getParserAdultData("koty");
         femaleCatsPhoto = parser.getParserAdultData("koshki");
     }
@@ -30,5 +32,11 @@ public class CatsDataCache {
         if (femaleCatsPhoto == null)
             updateCatsMaps();
         return femaleCatsPhoto;
+    }
+
+    public Map<String, Map<String, String>> getKittens() {
+        if (kittens == null)
+            updateCatsMaps();
+        return kittens;
     }
 }

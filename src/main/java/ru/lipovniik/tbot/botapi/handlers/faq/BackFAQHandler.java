@@ -55,9 +55,10 @@ public class BackFAQHandler implements InputMessageHandler {
     private Map<String, String> getKeyboardData() {
         Map<String, String> keyboardData = new LinkedHashMap<>();
 
-        keyboardData.put("Категория 1", "faq1");
-        keyboardData.put("Категория 2", "faq2");
-        keyboardData.put("Категория 3", "faq3");
+        keyboardData.put("Основные вопросы", "faq1");
+        keyboardData.put("Про покупку котят", "faq2");
+        keyboardData.put("Про содержание котят", "faq3");
+        keyboardData.put("Прочие вопросы", "faq4");
 
         return keyboardData;
     }
