@@ -106,8 +106,10 @@ public class TelegramFacade {
             case "/update" -> BotState.UPDATE_CATS;
             default -> BotState.IGNORE_MESSAGE;
         };
-        if (message.getReplyToMessage() != null)
+        if (message.getReplyToMessage() != null) {
             replyMessage = botStateContext.processInputMessage(BotState.SENDING_ANSWER, message);
+            return replyMessage;
+        }
 
         if (botState.equals(BotState.IGNORE_MESSAGE))
             return null;

@@ -15,7 +15,7 @@ public class SendMediaService {
     }
 
     public void sendPhoto(long chatId, String fileId, String imageCaption){
-        String rec = String.format("https://api.telegram.org/bot884989390:AAHd6PLB6mq5OOzFsNkr_eW1yJyVM4J8N48/sendPhoto?chat_id=%s&photo=%s&caption=%s",
+        String rec = String.format("https://api.telegram.org/bot1275133484:AAHuPiA0j7883NUuctkLWDELUyeRDgW_K8E/sendPhoto?chat_id=%s&photo=%s&caption=%s",
                 chatId, fileId, imageCaption);
         try{
             URL url = new URL(rec);

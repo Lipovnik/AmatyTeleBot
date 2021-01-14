@@ -53,9 +53,9 @@ public class LinksHandler implements InputMessageHandler {
         Map<String, String> keyboardData = new LinkedHashMap<>();
 
         keyboardData.put("Instagram", "https://instagram.com/amatycay.cats");
-        keyboardData.put("VK", "https://vk.com/amaty_cay_bengal_serval");
         keyboardData.put("WhatsApp", "wa.me/79137004577");
         keyboardData.put("Наш сайт", "https://amatycay154.ru/");
+        keyboardData.put("VK", "https://vk.com/amaty_cay_bengal_serval");
 
         return keyboardData;
     }
