@@ -12,8 +12,8 @@ import ru.lipovniik.tbot.service.ReplyMessagesService;
 @Slf4j
 @Component
 public class AboutUsHandler implements InputMessageHandler {
-    private UserDataCache userDataCache;
-    private ReplyMessagesService messagesService;
+    private final UserDataCache userDataCache;
+    private final ReplyMessagesService messagesService;
 
     public AboutUsHandler(UserDataCache userDataCache, ReplyMessagesService messagesService) {
         this.userDataCache = userDataCache;

@@ -28,18 +28,13 @@ public class UpdateCatsHandler implements InputMessageHandler {
         return processUsersInput(message);
     }
 
-    private SendMessage processUsersInput(Message inputMsg){
+    private SendMessage processUsersInput(Message inputMsg) {
         long chatId = inputMsg.getChatId();
         int userId = inputMsg.getFrom().getId();
-        if (chatId == (-465515338)) {
-            catsDataCache.updateCatsMaps();
-            SendMessage replyToUser = messagesService.getReplyMessage(chatId, "reply.update");
-            userDataCache.setUsersCurrentBotState(userId, BotState.WAITING_IN_MAIN_MENU);
-            return replyToUser;
-        }
-
+        catsDataCache.updateCatsMaps();
+        SendMessage replyToUser = messagesService.getReplyMessage(chatId, "reply.update");
         userDataCache.setUsersCurrentBotState(userId, BotState.WAITING_IN_MAIN_MENU);
-        return null;
+        return replyToUser;
     }
 
     @Override

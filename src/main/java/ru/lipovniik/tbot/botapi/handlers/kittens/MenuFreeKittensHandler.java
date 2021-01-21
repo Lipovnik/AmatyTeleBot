@@ -12,7 +12,6 @@ import ru.lipovniik.tbot.cache.CatsDataCache;
 import ru.lipovniik.tbot.cache.UserDataCache;
 import ru.lipovniik.tbot.service.InlineKeyboardService;
 import ru.lipovniik.tbot.service.ReplyMessagesService;
-import ru.lipovniik.tbot.service.SendMediaService;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class MenuFreeKittensHandler implements InputMessageHandler {
     private final ReplyMessagesService messagesService;
     private final InlineKeyboardService inlineKeyboardService;
 
-    MenuFreeKittensHandler(SendMediaService mediaService, UserDataCache userDataCache, CatsDataCache catsDataCache, AmatyCayParser parser, ReplyMessagesService messagesService, InlineKeyboardService inlineKeyboardService) {
+    MenuFreeKittensHandler(UserDataCache userDataCache, CatsDataCache catsDataCache, ReplyMessagesService messagesService, InlineKeyboardService inlineKeyboardService) {
         this.userDataCache = userDataCache;
         this.catsDataCache = catsDataCache;
         this.messagesService = messagesService;

@@ -33,13 +33,10 @@ public class BotConfig {
     public AmatyTeleBot amatyTeleBot(TelegramFacade telegramFacade){
         DefaultBotOptions options = new DefaultBotOptions();
 
-        /*options.setProxyHost(proxyHost);
-        options.setProxyPort(proxyPort);
-        options.setProxyType(proxyType);*/
-
         AmatyTeleBot amatyTeleBot = new AmatyTeleBot(options, telegramFacade);
         amatyTeleBot.setBotUserName(botUserName);
         amatyTeleBot.setBotToken(botToken);
+        //amatyTeleBot.setBotToken(System.getenv().get("BOT_TOKEN"));
         amatyTeleBot.setWebHookPath(webHookPath);
 
         return amatyTeleBot;

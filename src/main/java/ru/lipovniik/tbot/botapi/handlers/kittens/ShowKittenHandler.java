@@ -3,16 +3,12 @@ package ru.lipovniik.tbot.botapi.handlers.kittens;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import ru.lipovniik.tbot.botapi.BotState;
 import ru.lipovniik.tbot.botapi.InputMessageHandler;
 import ru.lipovniik.tbot.cache.CatsDataCache;
 import ru.lipovniik.tbot.cache.UserDataCache;
-import ru.lipovniik.tbot.service.EditMessagesService;
-import ru.lipovniik.tbot.service.InlineKeyboardService;
 import ru.lipovniik.tbot.service.SendMediaService;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Component
@@ -21,7 +17,7 @@ public class ShowKittenHandler implements InputMessageHandler {
     private final SendMediaService mediaService;
     private final CatsDataCache catsDataCache;
 
-    public ShowKittenHandler(UserDataCache userDataCache, EditMessagesService messagesService, InlineKeyboardService inlineKeyboardService, SendMediaService mediaService, CatsDataCache catsDataCache) {
+    public ShowKittenHandler(UserDataCache userDataCache, SendMediaService mediaService, CatsDataCache catsDataCache) {
         this.userDataCache = userDataCache;
         this.mediaService = mediaService;
         this.catsDataCache = catsDataCache;

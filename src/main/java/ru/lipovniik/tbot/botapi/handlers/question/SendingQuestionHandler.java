@@ -33,7 +33,7 @@ public class SendingQuestionHandler implements InputMessageHandler {
     private SendMessage processUsersInput(Message inputMsg){
         long fromChatId = inputMsg.getChatId();
         //int messageId = inputMsg.getMessageId();
-        long chatId = -465515338;
+        String chatId = "-1001445644752";
         int userId = inputMsg.getFrom().getId();
         String questionText = inputMsg.getText();
         String firstName = inputMsg.getFrom().getFirstName();
@@ -46,7 +46,7 @@ public class SendingQuestionHandler implements InputMessageHandler {
                 "\nText:\n" + questionText;
 
         SendMessage replyToUser = new SendMessage();
-        replyToUser.setChatId(String.valueOf(chatId));
+        replyToUser.setChatId(chatId);
         replyToUser.setText(text);
 
         userDataCache.setUsersCurrentBotState(userId, BotState.WAITING_IN_MAIN_MENU);
@@ -57,7 +57,7 @@ public class SendingQuestionHandler implements InputMessageHandler {
     }
 
     private void sendMessage(long chatId, String text){
-        String rec = String.format("https://api.telegram.org/bot884989390:AAHd6PLB6mq5OOzFsNkr_eW1yJyVM4J8N48/sendMessage?chat_id=%s&text=%s",
+        String rec = String.format("https://api.telegram.org/bot1275133484:AAHuPiA0j7883NUuctkLWDELUyeRDgW_K8E/sendMessage?chat_id=%s&text=%s",
                 chatId, text);
         try{
             URL url = new URL(rec);

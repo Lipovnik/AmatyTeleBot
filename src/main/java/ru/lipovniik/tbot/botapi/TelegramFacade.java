@@ -52,12 +52,12 @@ public class TelegramFacade {
     }
 
     private BotApiMethod<?> handleInputMessage(Message message) {
-        final long adminChatId = -465515338;
+        final String adminChatId = "-1001445644752";
 
         long chatId = message.getChatId();
         BotApiMethod<?> replyMessage;
 
-        if (chatId == adminChatId)
+        if (String.valueOf(chatId).equals(adminChatId))
             replyMessage = getAdminReplyMessage(message);
         else
             replyMessage = getReplyMessage(message);
@@ -76,7 +76,6 @@ public class TelegramFacade {
         } else {
             botState = switch (msgText) {
                 case "/start" -> BotState.MAIN_MENU;
-                case "/update" -> BotState.UPDATE_CATS;
                 case "О питомнике" -> BotState.ABOUT_US;
                 case "Вопросы" -> BotState.FAQ;
                 case "Где нас найти" -> BotState.LINKS;
