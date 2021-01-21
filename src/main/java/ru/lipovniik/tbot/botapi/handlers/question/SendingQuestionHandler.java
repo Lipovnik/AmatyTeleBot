@@ -57,8 +57,8 @@ public class SendingQuestionHandler implements InputMessageHandler {
     }
 
     private void sendMessage(long chatId, String text){
-        String rec = String.format("https://api.telegram.org/bot1275133484:AAHuPiA0j7883NUuctkLWDELUyeRDgW_K8E/sendMessage?chat_id=%s&text=%s",
-                chatId, text);
+        String rec = String.format("https://api.telegram.org/bot%s/sendMessage?chat_id=%s&text=%s",
+                System.getenv().get("BOT_TOKEN"), chatId, text);
         try{
             URL url = new URL(rec);
             BufferedReader in = new BufferedReader(new InputStreamReader( url.openStream()));

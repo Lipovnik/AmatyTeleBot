@@ -35,8 +35,7 @@ public class BotConfig {
 
         AmatyTeleBot amatyTeleBot = new AmatyTeleBot(options, telegramFacade);
         amatyTeleBot.setBotUserName(botUserName);
-        amatyTeleBot.setBotToken(botToken);
-        //amatyTeleBot.setBotToken(System.getenv().get("BOT_TOKEN"));
+        amatyTeleBot.setBotToken(System.getenv().get("BOT_TOKEN"));
         amatyTeleBot.setWebHookPath(webHookPath);
 
         return amatyTeleBot;
