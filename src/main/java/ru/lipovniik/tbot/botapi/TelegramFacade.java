@@ -103,6 +103,7 @@ public class TelegramFacade {
         System.out.println(message);
         BotState botState = switch (msgText) {
             case "/update" -> BotState.UPDATE_CATS;
+            case "/users" -> BotState.USERS;
             default -> BotState.IGNORE_MESSAGE;
         };
         if (message.getReplyToMessage() != null) {

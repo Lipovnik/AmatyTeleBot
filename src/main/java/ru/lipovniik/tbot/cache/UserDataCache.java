@@ -24,4 +24,8 @@ public class UserDataCache implements DataCache{
 
         return botState;
     }
+
+    public int getCountUsers(){
+        return usersBotStates.size();
+    }
 }

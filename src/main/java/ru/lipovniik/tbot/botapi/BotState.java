@@ -23,5 +23,6 @@ public enum BotState {
     SENDING_QUESTION,
     CANCEL_QUESTION,
     SENDING_ANSWER,
-    UPDATE_CATS
+    UPDATE_CATS,
+    USERS;
 }
