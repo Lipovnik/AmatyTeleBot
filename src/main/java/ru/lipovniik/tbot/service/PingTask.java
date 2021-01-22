@@ -14,7 +14,7 @@ public class PingTask {
     @Scheduled(fixedRate = 1620000)
     void pingMe(){
         try {
-            URL url = new URL("https://www.google.com");
+            URL url = new URL("https://amaty-cay.herokuapp.com/");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             log.info("Ping {}, OK: response code {}", url.getHost(), connection.getResponseCode());
